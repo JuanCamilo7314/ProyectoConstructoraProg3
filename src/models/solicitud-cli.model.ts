@@ -1,6 +1,32 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Cliente} from './cliente.model';
+import {Inmueble} from './inmueble.model';
+import {Usuario} from './usuario.model';
 
-@model()
+@model({
+  settings: {
+    foreignKeys: {
+      fk_cliente_id: {
+        name: 'fk_cliente_id',
+        entity: 'Cliente',
+        entityKey: 'IdCliente',
+        foreignKey: 'clienteId',
+      },
+      fk_inmueble_id: {
+        name: 'fk_inmueble_id',
+        entity: 'Inmueble',
+        entityKey: 'CodigoIn',
+        foreignKey: 'inmuebleId',
+      },
+      fk_usuario_id: {
+        name: 'fk_usuario_id',
+        entity: 'Usuario',
+        entityKey: 'IdUsuario',
+        foreignKey: 'usuarioId',
+      },
+    },
+  },
+})
 export class SolicitudCli extends Entity {
   @property({
     type: 'date',
@@ -27,6 +53,14 @@ export class SolicitudCli extends Entity {
   })
   IdSolicitud?: number;
 
+  @belongsTo(() => Cliente)
+  clienteId: number;
+
+  @belongsTo(() => Inmueble)
+  inmuebleId: number;
+
+  @belongsTo(() => Usuario)
+  usuarioId: number;
 
   constructor(data?: Partial<SolicitudCli>) {
     super(data);
