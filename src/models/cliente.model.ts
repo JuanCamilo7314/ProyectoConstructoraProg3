@@ -9,7 +9,7 @@ export class Cliente extends Entity {
     generated: true,
   })
   IdCliente?: number;
-  
+
   @property({
     type: 'number',
     required: true,
@@ -41,10 +41,10 @@ export class Cliente extends Entity {
   DImagenCli: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  TelefonoCli: number;
+  TelefonoCli: string;
 
   @property({
     type: 'string',
@@ -89,10 +89,10 @@ export class Cliente extends Entity {
   ApellidoRefFamCli: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  TelefonoRefFamCli: number;
+  TelefonoRefFamCli: string;
 
   @property({
     type: 'string',
@@ -107,10 +107,10 @@ export class Cliente extends Entity {
   ApellidoRefPerCli: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  TelefonoRefPerCli: number;
+  TelefonoRefPerCli: string;
 
 
   constructor(data?: Partial<Cliente>) {

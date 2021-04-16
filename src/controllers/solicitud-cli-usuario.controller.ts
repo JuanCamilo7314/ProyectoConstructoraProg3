@@ -1,14 +1,13 @@
 import {
-  repository,
+  repository
 } from '@loopback/repository';
 import {
-  param,
   get,
-  getModelSchemaRef,
+  getModelSchemaRef, param
 } from '@loopback/rest';
 import {
   SolicitudCli,
-  Usuario,
+  Usuario
 } from '../models';
 import {SolicitudCliRepository} from '../repositories';
 
@@ -31,7 +30,7 @@ export class SolicitudCliUsuarioController {
     },
   })
   async getUsuario(
-    @param.path.number('id') id: typeof SolicitudCli.prototype.IdSolicitud,
+    @param.path.string('id') id: typeof SolicitudCli.prototype.IdSolicitud,
   ): Promise<Usuario> {
     return this.solicitudCliRepository.usuario(id);
   }

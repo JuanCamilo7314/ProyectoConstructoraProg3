@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Rol} from './rol.model';
 
 @model({
@@ -15,11 +15,11 @@ import {Rol} from './rol.model';
 })
 export class Usuario extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  IdUsuario?: number;
+  IdUsuario?: string;
 
   @property({
     type: 'string',
@@ -46,10 +46,10 @@ export class Usuario extends Entity {
   EmailU: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  TelefonoU: number;
+  TelefonoU: string;
 
   @property({
     type: 'string',
