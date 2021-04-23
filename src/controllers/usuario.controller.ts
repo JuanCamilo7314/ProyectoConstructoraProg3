@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
 import {
   Count,
@@ -23,9 +24,9 @@ import {
   response
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/keys';
-import {CambiarClave, ResetearClave, Usuario} from '../models';
+import {CambiarClave, Credenciales, ResetearClave, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
-import {ControlClaveService, NotificacionService} from '../services';
+import {ControlClaveService, JwtService, NotificacionService} from '../services';
 
 export class UsuarioController {
   constructor(
@@ -34,9 +35,12 @@ export class UsuarioController {
     @service(ControlClaveService)
     public claveService: ControlClaveService,
     @service(NotificacionService)
-    public servicioNotificacion: NotificacionService
+    public servicioNotificacion: NotificacionService,
+    @service(JwtService)
+    public serviciotoken: JwtService
   ) { }
 
+  @authenticate('admin')
   @post('/usuarios')
   @response(200, {
     description: 'Usuario model instance',
@@ -97,6 +101,7 @@ export class UsuarioController {
     return this.usuarioRepository.find(filter);
   }
 
+  @authenticate('admin')
   @patch('/usuarios')
   @response(200, {
     description: 'Usuario PATCH success count',
@@ -132,6 +137,7 @@ export class UsuarioController {
     return this.usuarioRepository.findById(id, filter);
   }
 
+  @authenticate('admin')
   @patch('/usuarios/{id}')
   @response(204, {
     description: 'Usuario PATCH success',
@@ -150,6 +156,7 @@ export class UsuarioController {
     await this.usuarioRepository.updateById(id, usuario);
   }
 
+  @authenticate('admin')
   @put('/usuarios/{id}')
   @response(204, {
     description: 'Usuario PUT success',
@@ -161,6 +168,7 @@ export class UsuarioController {
     await this.usuarioRepository.replaceById(id, usuario);
   }
 
+  @authenticate('admin')
   @del('/usuarios/{id}')
   @response(204, {
     description: 'Usuario DELETE success',
@@ -249,5 +257,41 @@ export class UsuarioController {
     return {
       enviado: "KO"
     };
+  }
+  @post('/login', {
+    responses: {
+      '200': {
+        description: 'Identificacion de usuarios'
+      }
+    }
+  })
+  async login(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Credenciales),
+        },
+      },
+    }) credenciales: Credenciales
+
+  ): Promise<object> {
+    let usuario = await this.usuarioRepository.findOne({where: {EmailU: credenciales.EmailU}});
+    if (usuario) {
+      if (this.claveService.DescifrarTexto(usuario.Clave) == credenciales.ClaveU) {
+        console.log(usuario.EmailU)
+        console.log(usuario.Clave)
+        //generar token
+        let tk = this.serviciotoken.CrearTokenJWT(usuario);
+        usuario.Clave = '';
+        return {
+          user: usuario,
+          token: tk
+        }
+      } else {
+        throw new HttpErrors[401]("Clave incorrecta.")
+      }
+    } else {
+      throw new HttpErrors[401]("Usuario incorrecto.")
+    }
   }
 }

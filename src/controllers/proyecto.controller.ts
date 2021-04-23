@@ -1,21 +1,26 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
+
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Proyecto} from '../models';
 import {ProyectoRepository} from '../repositories';
@@ -23,9 +28,10 @@ import {ProyectoRepository} from '../repositories';
 export class ProyectoController {
   constructor(
     @repository(ProyectoRepository)
-    public proyectoRepository : ProyectoRepository,
-  ) {}
+    public proyectoRepository: ProyectoRepository,
+  ) { }
 
+  @authenticate('admin')
   @post('/proyectos')
   @response(200, {
     description: 'Proyecto model instance',
@@ -76,6 +82,7 @@ export class ProyectoController {
     return this.proyectoRepository.find(filter);
   }
 
+  @authenticate('admin')
   @patch('/proyectos')
   @response(200, {
     description: 'Proyecto PATCH success count',
@@ -111,6 +118,7 @@ export class ProyectoController {
     return this.proyectoRepository.findById(id, filter);
   }
 
+  @authenticate('admin')
   @patch('/proyectos/{id}')
   @response(204, {
     description: 'Proyecto PATCH success',
@@ -129,6 +137,7 @@ export class ProyectoController {
     await this.proyectoRepository.updateById(id, proyecto);
   }
 
+  @authenticate('admin')
   @put('/proyectos/{id}')
   @response(204, {
     description: 'Proyecto PUT success',
@@ -140,6 +149,7 @@ export class ProyectoController {
     await this.proyectoRepository.replaceById(id, proyecto);
   }
 
+  @authenticate('admin')
   @del('/proyectos/{id}')
   @response(204, {
     description: 'Proyecto DELETE success',

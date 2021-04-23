@@ -1,21 +1,26 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
+
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Pais} from '../models';
 import {PaisRepository} from '../repositories';
@@ -23,9 +28,10 @@ import {PaisRepository} from '../repositories';
 export class PaisController {
   constructor(
     @repository(PaisRepository)
-    public paisRepository : PaisRepository,
-  ) {}
+    public paisRepository: PaisRepository,
+  ) { }
 
+  @authenticate('admin')
   @post('/paises')
   @response(200, {
     description: 'Pais model instance',
@@ -76,6 +82,7 @@ export class PaisController {
     return this.paisRepository.find(filter);
   }
 
+  @authenticate('admin')
   @patch('/paises')
   @response(200, {
     description: 'Pais PATCH success count',
@@ -111,6 +118,7 @@ export class PaisController {
     return this.paisRepository.findById(id, filter);
   }
 
+  @authenticate('admin')
   @patch('/paises/{id}')
   @response(204, {
     description: 'Pais PATCH success',
@@ -129,6 +137,7 @@ export class PaisController {
     await this.paisRepository.updateById(id, pais);
   }
 
+  @authenticate('admin')
   @put('/paises/{id}')
   @response(204, {
     description: 'Pais PUT success',
@@ -140,6 +149,7 @@ export class PaisController {
     await this.paisRepository.replaceById(id, pais);
   }
 
+  @authenticate('admin')
   @del('/paises/{id}')
   @response(204, {
     description: 'Pais DELETE success',

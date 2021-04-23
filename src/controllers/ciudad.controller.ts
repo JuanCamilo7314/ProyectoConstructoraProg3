@@ -1,21 +1,26 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
+
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Ciudad} from '../models';
 import {CiudadRepository} from '../repositories';
@@ -23,9 +28,10 @@ import {CiudadRepository} from '../repositories';
 export class CiudadController {
   constructor(
     @repository(CiudadRepository)
-    public ciudadRepository : CiudadRepository,
-  ) {}
+    public ciudadRepository: CiudadRepository,
+  ) { }
 
+  @authenticate('admin')
   @post('/ciudades')
   @response(200, {
     description: 'Ciudad model instance',
@@ -76,6 +82,7 @@ export class CiudadController {
     return this.ciudadRepository.find(filter);
   }
 
+  @authenticate('admin')
   @patch('/ciudades')
   @response(200, {
     description: 'Ciudad PATCH success count',
@@ -111,6 +118,7 @@ export class CiudadController {
     return this.ciudadRepository.findById(id, filter);
   }
 
+  @authenticate('admin')
   @patch('/ciudades/{id}')
   @response(204, {
     description: 'Ciudad PATCH success',
@@ -129,6 +137,7 @@ export class CiudadController {
     await this.ciudadRepository.updateById(id, ciudad);
   }
 
+  @authenticate('admin')
   @put('/ciudades/{id}')
   @response(204, {
     description: 'Ciudad PUT success',
@@ -140,6 +149,7 @@ export class CiudadController {
     await this.ciudadRepository.replaceById(id, ciudad);
   }
 
+  @authenticate('admin')
   @del('/ciudades/{id}')
   @response(204, {
     description: 'Ciudad DELETE success',

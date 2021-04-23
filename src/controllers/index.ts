@@ -18,3 +18,5 @@ export * from './proyecto.controller';
 export * from './bloque.controller';
 export * from './inmueble.controller';
 export * from './cliente.controller';
+export * from './carga-archivos.controller';
+export * from './descarga-archivos.controller';
