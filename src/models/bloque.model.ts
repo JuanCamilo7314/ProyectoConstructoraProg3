@@ -1,12 +1,12 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
-import {Proyecto} from './proyecto.model';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {Inmueble} from './inmueble.model';
+import {Proyecto} from './proyecto.model';
 
 @model({
   settings: {
     foreignKeys: {
       fk_proyecto_id: {
-        name: 'fk_proyecto_id',
+        name: 'fk_proyecto_idd',
         entity: 'Proyecto',
         entityKey: 'CodigoProy',
         foreignKey: 'proyectoId',

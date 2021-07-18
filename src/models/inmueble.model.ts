@@ -1,11 +1,11 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Bloque} from './bloque.model';
 
 @model({
   settings: {
     foreignKeys: {
       fk_bloque_id: {
-        name: 'fk_bloque_id',
+        name: 'fk_bloque_idd',
         entity: 'Bloque',
         entityKey: 'CodigoB',
         foreignKey: 'bloqueId',

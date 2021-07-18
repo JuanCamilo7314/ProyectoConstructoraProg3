@@ -20,3 +20,5 @@ export * from './inmueble.controller';
 export * from './cliente.controller';
 export * from './carga-archivos.controller';
 export * from './descarga-archivos.controller';
+export * from './cliente-ciudad.controller';
+export * from './ciudad-cliente.controller';

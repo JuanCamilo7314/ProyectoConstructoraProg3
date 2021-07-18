@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Cliente} from './cliente.model';
 import {Inmueble} from './inmueble.model';
 import {Usuario} from './usuario.model';
@@ -7,19 +7,19 @@ import {Usuario} from './usuario.model';
   settings: {
     foreignKeys: {
       fk_cliente_id: {
-        name: 'fk_cliente_id',
+        name: 'fk_cliente_idd',
         entity: 'Cliente',
         entityKey: 'IdCliente',
         foreignKey: 'clienteId',
       },
       fk_inmueble_id: {
-        name: 'fk_inmueble_id',
+        name: 'fk_inmueble_idd',
         entity: 'Inmueble',
         entityKey: 'CodigoIn',
         foreignKey: 'inmuebleId',
       },
       fk_usuario_id: {
-        name: 'fk_usuario_id',
+        name: 'fk_usuario_idd',
         entity: 'Usuario',
         entityKey: 'IdUsuario',
         foreignKey: 'usuarioId',

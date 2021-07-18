@@ -31,7 +31,6 @@ export class BloqueController {
     public bloqueRepository: BloqueRepository,
   ) { }
 
-  @authenticate('admin')
   @post('/bloques')
   @response(200, {
     description: 'Bloque model instance',

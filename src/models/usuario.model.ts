@@ -5,7 +5,7 @@ import {Rol} from './rol.model';
   settings: {
     foreignKeys: {
       fk_rol_id: {
-        name: 'fk_rol_id',
+        name: 'fk_rol_idd',
         entity: 'Rol',
         entityKey: 'IdR',
         foreignKey: 'rolId',
