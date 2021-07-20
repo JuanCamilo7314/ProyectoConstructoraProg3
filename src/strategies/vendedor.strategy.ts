@@ -18,7 +18,7 @@ export class VendedorStrategy implements AuthenticationStrategy {
     }
     let info = this.servicioJWT.VerificarTokenJWT(token);
     if (info) {
-      if (info.data.role == '608325b4855f1d6c1048f7bf') {
+      if (info.data.role == '6079f12427f72e71196cee9e') {
         let perfil: UserProfile = Object.assign({
           id: info.data.id,
           nombre_usuario: info.data.nom_usuario,
