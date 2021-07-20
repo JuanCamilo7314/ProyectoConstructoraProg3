@@ -17,11 +17,13 @@ import {ClienteRepository, InmuebleRepository, SolicitudCliRepository} from '../
 import {NotificacionService} from '../services';
 
 export class SolicitudController {
-  InmuebleRepository: InmuebleRepository;
-  ClienteRepository: ClienteRepository;
   constructor(
     @repository(SolicitudCliRepository)
     public solicitudCliRepository: SolicitudCliRepository,
+    @repository(InmuebleRepository)
+    public InmuebleRepository: InmuebleRepository,
+    @repository(ClienteRepository)
+    public ClienteRepository: ClienteRepository,
     @service(NotificacionService)
     public servicioNotificacion: NotificacionService,
   ) { }

@@ -1,30 +1,34 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Pagos} from '../models';
-import {PagosRepository} from '../repositories';
+import {ClienteRepository, InmuebleRepository, PagosRepository, SolicitudCliRepository} from '../repositories';
+import {NotificacionService} from '../services';
 
 export class PagoController {
   constructor(
     @repository(PagosRepository)
-    public pagosRepository : PagosRepository,
-  ) {}
+    public pagosRepository: PagosRepository,
+    @repository(ClienteRepository)
+    public clienteRepository: ClienteRepository,
+    @repository(SolicitudCliRepository)
+    public SolicitudCliRepository: SolicitudCliRepository,
+    @repository(InmuebleRepository)
+    public InmuebleRepository: InmuebleRepository,
+    @service(NotificacionService)
+    public servicioNotificacion: NotificacionService,
+  ) { }
 
   @post('/pagos')
   @response(200, {
@@ -44,6 +48,21 @@ export class PagoController {
     })
     pagos: Omit<Pagos, 'id'>,
   ): Promise<Pagos> {
+    let SolicitudCliente = await this.SolicitudCliRepository.findOne({where: {IdSolicitud: pagos.solicitudCliId}})
+    if (!SolicitudCliente) {
+      throw new HttpErrors[403]("No se encuentra la solicitud para notificar.")
+    }
+    let inmueble = await this.InmuebleRepository.findOne({where: {CodigoIn: SolicitudCliente.inmuebleId}})
+    if (!inmueble) {
+      throw new HttpErrors[403]("No se encuentra el inmueble para notificar.")
+    }
+    let cliente = await this.clienteRepository.findOne({where: {IdCliente: SolicitudCliente.clienteId}})
+    if (!cliente) {
+      throw new HttpErrors[403]("No se encuentra el cliente para notificar.")
+    }
+    let asunto = 'Solicitud Aceptada'
+    let contenido = `<strong>Hola, buen dia</strong><br />su PAGO del inmuble ${inmueble.NombreIn} ha sido REALIZADO por un total de ${inmueble.ValorIn} en el sistemas de UdeC S.A.S. :P :) `
+    this.servicioNotificacion.EnviarEmail(cliente.EmailCli, asunto, contenido);
     return this.pagosRepository.create(pagos);
   }
 
