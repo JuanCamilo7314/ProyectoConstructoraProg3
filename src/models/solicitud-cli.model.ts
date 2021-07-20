@@ -1,6 +1,7 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, hasOne, model, property} from '@loopback/repository';
 import {Cliente} from './cliente.model';
 import {Inmueble} from './inmueble.model';
+import {Pagos} from './pagos.model';
 import {Usuario} from './usuario.model';
 
 @model({
@@ -29,7 +30,7 @@ import {Usuario} from './usuario.model';
 })
 export class SolicitudCli extends Entity {
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
   FechaSolicitud: string;
@@ -60,7 +61,10 @@ export class SolicitudCli extends Entity {
   inmuebleId: number;
 
   @belongsTo(() => Usuario)
-  usuarioId: number;
+  usuarioId: string;
+
+  @hasOne(() => Pagos)
+  pagos: Pagos;
 
   constructor(data?: Partial<SolicitudCli>) {
     super(data);

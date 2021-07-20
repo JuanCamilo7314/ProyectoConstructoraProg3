@@ -10,3 +10,4 @@ export * from './solicitud-cli.model';
 export * from './cambiar-clave.model';
 export * from './resetear-clave.model';
 export * from './credenciales.model';
+export * from './pagos.model';

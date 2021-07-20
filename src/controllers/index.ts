@@ -23,3 +23,5 @@ export * from './descarga-archivos.controller';
 export * from './cliente-ciudad.controller';
 export * from './ciudad-cliente.controller';
 export * from './solicitud.controller';
+export * from './solicitud-cli-pagos.controller';
+export * from './pago.controller';

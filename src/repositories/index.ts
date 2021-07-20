@@ -7,3 +7,4 @@ export * from './inmueble.repository';
 export * from './pais.repository';
 export * from './proyecto.repository';
 export * from './solicitud-cli.repository';
+export * from './pagos.repository';
