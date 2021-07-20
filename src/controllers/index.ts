@@ -22,3 +22,4 @@ export * from './carga-archivos.controller';
 export * from './descarga-archivos.controller';
 export * from './cliente-ciudad.controller';
 export * from './ciudad-cliente.controller';
+export * from './solicitud.controller';
