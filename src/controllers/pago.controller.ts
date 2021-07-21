@@ -60,7 +60,7 @@ export class PagoController {
     if (!cliente) {
       throw new HttpErrors[403]("No se encuentra el cliente para notificar.")
     }
-    let asunto = 'Solicitud Aceptada'
+    let asunto = 'Pago Realizado'
     let contenido = `<strong>Hola, buen dia</strong><br />su PAGO del inmuble ${inmueble.NombreIn} ha sido REALIZADO por un total de ${inmueble.ValorIn} en el sistemas de UdeC S.A.S. :P :) `
     this.servicioNotificacion.EnviarEmail(cliente.EmailCli, asunto, contenido);
     return this.pagosRepository.create(pagos);
